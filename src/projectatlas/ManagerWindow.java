@@ -321,7 +321,7 @@ public class ManagerWindow extends javax.swing.JFrame {
             {
                 jTable3.setValueAt(results.getString(1), i, 0);
                 jTable3.setValueAt(results.getString(2), i, 1);
-                
+                //hkj
                 
                 if(results.isLast())
                     return;
