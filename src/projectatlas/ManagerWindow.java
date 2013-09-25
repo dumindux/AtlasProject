@@ -6,6 +6,11 @@ package projectatlas;
 
 import java.awt.Dialog;
 import java.awt.Dialog.ModalityType;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.TableCellEditor;
 
 /**
  *
@@ -20,6 +25,7 @@ public class ManagerWindow extends javax.swing.JFrame {
     public ManagerWindow(User user) {
         this.user=user;
         initComponents();
+        updateWindowTables();
     }
 
     /**
@@ -154,6 +160,11 @@ public class ManagerWindow extends javax.swing.JFrame {
         jLabel4.setText("Finished Products");
 
         jButton3.setText("Refresh");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("More Activity");
 
@@ -286,6 +297,93 @@ public class ManagerWindow extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        updateWindowTables();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void updateWindowTables()
+    {
+        updateRawMaterialWindowTable();
+        updateFinishedProductWindowTable();
+        updateLogWindowTable();
+    }
+    
+    private void updateLogWindowTable()
+    {
+        try {
+            ResultSet results=FactoryLogsTableProxy.getFactoryLogsTableProxy().getTableContents();
+            if(results.isLast())
+                return;
+            results.next();
+            
+            for(int i=0;;i++)
+            {
+                jTable3.setValueAt(results.getString(1), i, 0);
+                jTable3.setValueAt(results.getString(2), i, 1);
+                
+                
+                if(results.isLast())
+                    return;
+                else
+                    results.next();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void updateFinishedProductWindowTable(){
+        /*
+         * loads data from finished product database to the manager window
+         */
+        try {
+            ResultSet results=FinishedProductTableProxy.getFinishedProductTableProxy().getTableContents();
+            results.next();
+            if(results.isLast())
+                return;
+            for(int i=0;;i++)
+            {
+                jTable2.setValueAt(results.getString(2), i, 0);
+                jTable2.setValueAt(Integer.toString(Integer.parseInt(results.getString(4))+Integer.parseInt(results.getString(4))), i, 1);
+                jTable2.setValueAt(results.getString(3), i, 2);
+                
+                if(results.isLast())
+                    return;
+                else
+                    results.next();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    private void updateRawMaterialWindowTable()
+    {
+        /*
+         * loads data from the Raw Material database to the jTable in manager main window
+         */
+        try {
+            ResultSet results=RawMaterialTypeInfoTableProxy.getRawMaterialTypeInfoTableProxy().getTableContents();
+            results.next();
+            if(results.isLast())
+                return;
+            for(int i=0;;i++)
+            {
+                jTable1.setValueAt(results.getString(1), i, 0);
+                jTable1.setValueAt(results.getString(3), i, 1);
+                jTable1.setValueAt(results.getString(2), i, 2);
+                
+                if(results.isLast())
+                    return;
+                else
+                    results.next();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -320,6 +418,8 @@ public class ManagerWindow extends javax.swing.JFrame {
             }
         });
     }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
