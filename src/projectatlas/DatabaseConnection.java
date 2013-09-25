@@ -22,7 +22,7 @@ import java.util.Arrays;
  * 
  */
 public class DatabaseConnection {
-    private String dbURL="jdbc:mysql://localhost/atlasservices?user=root&password=root";
+    private String dbURL="jdbc:mysql://localhost:3306/atlasservices";
     private Connection conn=null;
     
     private static DatabaseConnection instance=null;
@@ -47,14 +47,15 @@ public class DatabaseConnection {
     {
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conn=DriverManager.getConnection(dbURL);
+            conn=DriverManager.getConnection(dbURL,
+                            "root","");
             
         }
         catch(Exception e)
         {
             System.out.println("Database connection failed");
-            System.exit(0);
             e.printStackTrace();
+            System.exit(0);
         }
     }
     
@@ -69,7 +70,8 @@ public class DatabaseConnection {
             if(conn!=null)
             {
                 
-                DriverManager.getConnection(dbURL+";shutdown=true");
+                DriverManager.getConnection(dbURL,
+                            "root","");
                 conn.close();
             }
         }
