@@ -41,6 +41,7 @@ public class DatabaseConnection {
         }
         else
             return instance;
+        //hkjhsdkfj
     }
     
     private void createConnection()//establishes connection to the database
