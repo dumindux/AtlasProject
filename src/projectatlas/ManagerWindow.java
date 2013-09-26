@@ -169,8 +169,18 @@ public class ManagerWindow extends javax.swing.JFrame {
         jButton4.setText("More Activity");
 
         jButton5.setText("More");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("More");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -302,6 +312,16 @@ public class ManagerWindow extends javax.swing.JFrame {
         updateWindowTables();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        new RawMaterialWindow().setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        new FinishedProductWindow().setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     public void updateWindowTables()
     {
         updateRawMaterialWindowTable();
@@ -313,6 +333,7 @@ public class ManagerWindow extends javax.swing.JFrame {
     {
         try {
             ResultSet results=FactoryLogsTableProxy.getFactoryLogsTableProxy().getTableContents();
+            
             if(results.isLast())
                 return;
             results.next();
@@ -339,13 +360,14 @@ public class ManagerWindow extends javax.swing.JFrame {
          */
         try {
             ResultSet results=FinishedProductTableProxy.getFinishedProductTableProxy().getTableContents();
-            results.next();
+
             if(results.isLast())
                 return;
+            results.next();
             for(int i=0;;i++)
             {
                 jTable2.setValueAt(results.getString(2), i, 0);
-                jTable2.setValueAt(Integer.toString(Integer.parseInt(results.getString(4))+Integer.parseInt(results.getString(4))), i, 1);
+                jTable2.setValueAt(Integer.toString(Integer.parseInt(results.getString(4))+Integer.parseInt(results.getString(5))), i, 1);
                 jTable2.setValueAt(results.getString(3), i, 2);
                 
                 if(results.isLast())
@@ -366,9 +388,10 @@ public class ManagerWindow extends javax.swing.JFrame {
          */
         try {
             ResultSet results=RawMaterialTypeInfoTableProxy.getRawMaterialTypeInfoTableProxy().getTableContents();
-            results.next();
+
             if(results.isLast())
                 return;
+            results.next();
             for(int i=0;;i++)
             {
                 jTable1.setValueAt(results.getString(1), i, 0);
