@@ -15,31 +15,29 @@ import java.util.logging.Logger;
  *
  * @author Dumindu
  */
-public class FactoryLogsTableProxy implements TableProxy {
-
+public class RawMaterialTypeInfoWarehouseTableProxy implements TableProxy{
     private Connection connection;
-    private String tableName="factory_logs";
+    private String tableName="rawmaterial_type_info_warehouse";
     private Statement stmt=null;
     
-    private static FactoryLogsTableProxy instance=null;
+    private static RawMaterialTypeInfoWarehouseTableProxy instance=null;
     
-    private FactoryLogsTableProxy()
+    private RawMaterialTypeInfoWarehouseTableProxy()
     {
         connection=DatabaseConnection.getDatabaseConnection().getConnection();  //retrieves the connection to the database from singleton DatabaseConnection object
         
     }
     
-    public static FactoryLogsTableProxy getFactoryLogsTableProxy()
+    public static RawMaterialTypeInfoWarehouseTableProxy getRawMaterialTypeInfoWarehouseTableProxy()
     {
         if(instance==null)
         {
-            instance=new FactoryLogsTableProxy();
+            instance=new RawMaterialTypeInfoWarehouseTableProxy();
             return instance;
         }
         else
             return instance;
     }
-    
     @Override
     public Object get(String ID) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -63,11 +61,13 @@ public class FactoryLogsTableProxy implements TableProxy {
         try {
             
             stmt=connection.createStatement();
-            ResultSet results=stmt.executeQuery("select * from "+tableName+" where level='INFO'");
+            ResultSet results=stmt.executeQuery("select * from "+tableName);
             return results;
         } catch (SQLException ex) {
-            Logger.getLogger(projectatlas.FactoryLogsTableProxy.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RawMaterialTypeInfoWarehouseTableProxy.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+        
     }
 }
+

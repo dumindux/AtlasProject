@@ -12,6 +12,8 @@ public abstract class User {
     private String username;
     private String passwordHash;
     
+    public static String currentUser="not logged in";
+    
     public User(String username)
     {
         this.username=username;

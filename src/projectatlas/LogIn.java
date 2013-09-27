@@ -152,6 +152,7 @@ public class LogIn extends javax.swing.JFrame {
             if(user instanceof Manager)
             {
                 new ManagerWindow(user).setVisible(true);
+                User.currentUser=user.getUsername();
             }
             else if(user instanceof StoreKeeper)
             {
