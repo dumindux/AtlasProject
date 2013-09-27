@@ -47,8 +47,7 @@ public class DatabaseConnection {
     {
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conn=DriverManager.getConnection(dbURL,
-                            "root","");
+            conn=DriverManager.getConnection(dbURL,"root","");
             
         }
         catch(Exception e)

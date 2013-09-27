@@ -155,7 +155,7 @@ public class LogIn extends javax.swing.JFrame {
             }
             else if(user instanceof StoreKeeper)
             {
-                new StoreKeeperWindow(user).setVisible(true);
+                new StoreKeeperFactoryWindow(user).setVisible(true);
             }
             else
             {
