@@ -41,12 +41,50 @@ public class FinishedProductTableProxy implements TableProxy{
     }
     @Override
     public Object get(String ID) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            stmt=connection.createStatement();
+            ResultSet results=stmt.executeQuery("select * from "+tableName+" where type='"+ID+"'");
+            if(!results.next())
+                return null;
+            else
+            {
+                return new FinishedProduct(results.getString(1),results.getInt(2),results.getInt(3),results.getInt(4));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Database error!");
+            Logger.getLogger(FinishedProductTableProxy.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
     }
 
     @Override
     public boolean add(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try{
+            FinishedProduct fp=(FinishedProduct)obj;
+            stmt=connection.createStatement();
+            ResultSet results=stmt.executeQuery("select * from "+tableName+" where type='"+fp.getType()+"'");
+            if(results.next())
+            {
+                
+                stmt.executeUpdate("UPDATE finished_product SET amount_avail="+fp.getAmount_avail()+",amount_res="+fp.getAmount_res()+",unit_price="+fp.getUnitPrice()+ " where type='"+fp.getType()+"'");
+                stmt.close();
+                return true;
+           
+            }
+            else
+            {
+                stmt.executeUpdate("INSERT INTO finished_product VALUES('"+fp.getType()+"',"+fp.getAmount_avail()+","+fp.getAmount_res()+","+fp.getUnitPrice()+")");
+                stmt.close();
+                return true;
+            }
+                 
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -70,5 +108,13 @@ public class FinishedProductTableProxy implements TableProxy{
         }
         
     }
+    
+    public static void main(String[] args)
+    {
+        FinishedProduct fp1=new FinishedProduct("pen",1200,2400,15),fp2=new FinishedProduct("eraser",250,300,12);
+        FinishedProductTableProxy.getFinishedProductTableProxy().add(fp2);
+        
+    }
+    
 }
 

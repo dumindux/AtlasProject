@@ -414,9 +414,9 @@ public class ManagerWindow extends javax.swing.JFrame {
             results.next();
             for(int i=0;;i++)
             {
-                jTable2.setValueAt(results.getString(2), i, 0);
-                jTable2.setValueAt(Integer.toString(Integer.parseInt(results.getString(4))+Integer.parseInt(results.getString(5))), i, 1);
-                jTable2.setValueAt(results.getString(3), i, 2);
+                jTable2.setValueAt(results.getString(1), i, 0);
+                jTable2.setValueAt(Integer.toString(Integer.parseInt(results.getString(2))+Integer.parseInt(results.getString(3))), i, 1);
+                jTable2.setValueAt(results.getString(4), i, 2);
                 
                 if(results.isLast())
                     return;
