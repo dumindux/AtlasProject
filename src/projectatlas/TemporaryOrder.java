@@ -17,9 +17,13 @@ class TemporaryOrder {
     public void addItem(String type,int amount){
         itmList.add(new OrderItem(type, amount));
     }
+
+    public ArrayList<OrderItem> getItmList() {
+        return itmList;
+    }
     
     
-   private class OrderItem{
+   public static class OrderItem{
        /**
         * This class holds item types and desired amounts
         */
@@ -30,7 +34,24 @@ class TemporaryOrder {
             this.type = type;
             this.amount = amount;
         }
+
+        public String getType() {
+            return type;
+        }
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
        
+        
        
        
    }

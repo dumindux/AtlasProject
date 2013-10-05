@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
 /**
@@ -382,23 +383,24 @@ public class ManagerWindow extends javax.swing.JFrame {
         try {
             ResultSet results=FactoryLogsTableProxy.getFactoryLogsTableProxy().getTableContents();
             
-            if(results.isLast())
-                return;
-            results.next();
-            
             for(int i=0;;i++)
             {
+                if(!results.next())
+                    return;
                 jTable3.setValueAt(results.getString(5), i, 0);
                 jTable3.setValueAt(results.getString(4), i, 1);
                 //hkj
                 
-                if(results.isLast())
-                    return;
-                else
-                    results.next();
+                if(i==jTable3.getRowCount()-1)
+                {
+                    DefaultTableModel model=(DefaultTableModel)jTable3.getModel();
+                    model.addRow(new Object[]{null,null,null}); 
+                }
+                    
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
     }
     
@@ -408,23 +410,26 @@ public class ManagerWindow extends javax.swing.JFrame {
          */
         try {
             ResultSet results=FinishedProductTableProxy.getFinishedProductTableProxy().getTableContents();
-
-            if(results.isLast())
-                return;
-            results.next();
+            
             for(int i=0;;i++)
             {
+                if(!results.next())
+                    return;
+                
+                System.out.println(i);
                 jTable2.setValueAt(results.getString(1), i, 0);
                 jTable2.setValueAt(Integer.toString(Integer.parseInt(results.getString(2))+Integer.parseInt(results.getString(3))), i, 1);
                 jTable2.setValueAt(results.getString(4), i, 2);
-                
-                if(results.isLast())
-                    return;
-                else
-                    results.next();
+
+                if(i==jTable2.getRowCount()-1)
+                {
+                    DefaultTableModel model=(DefaultTableModel)jTable2.getModel();
+                    model.addRow(new Object[]{null,null,null}); 
+                }
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
         
     }
@@ -437,19 +442,20 @@ public class ManagerWindow extends javax.swing.JFrame {
         try {
             ResultSet results=RawMaterialTypeInfoTableProxy.getRawMaterialTypeInfoTableProxy().getTableContents();
 
-            if(results.isLast())
-                return;
-            results.next();
             for(int i=0;;i++)
             {
+                if(!results.next())
+                    return;
+                
                 jTable1.setValueAt(results.getString(1), i, 0);
                 jTable1.setValueAt(results.getString(3), i, 1);
                 jTable1.setValueAt(results.getString(2), i, 2);
-                
-                if(results.isLast())
-                    return;
-                else
-                    results.next();
+                if(i==jTable1.getRowCount()-1)
+                {
+                    DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
+                    model.addRow(new Object[]{null,null,null}); 
+                }
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);

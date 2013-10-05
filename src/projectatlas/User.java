@@ -12,7 +12,7 @@ public abstract class User {
     private String username;
     private String passwordHash;
     
-    public static String currentUser="not logged in";
+    public static User currentUser=null;
     
     public User(String username)
     {

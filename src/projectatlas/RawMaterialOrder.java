@@ -13,14 +13,19 @@ import java.util.ArrayList;
 public class RawMaterialOrder extends Order{
 
     private ArrayList<ItemInfo> itemList= new ArrayList<ItemInfo>();
-            
+
+    public RawMaterialOrder() {
+    }
+    
     public RawMaterialOrder(String orderID) {
         super(orderID);
     }
+    
     public void addItem(int batchNumber,int amount)
     {
         itemList.add(new ItemInfo(batchNumber,amount));
     }
+    
     private class ItemInfo{
         private int batchNumber;
         private int amount;

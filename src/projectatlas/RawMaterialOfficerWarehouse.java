@@ -8,14 +8,16 @@ package projectatlas;
  *
  * @author Dumindu
  */
-public class StoreKeeperWarehouse extends User {
+public class RawMaterialOfficerWarehouse extends User{
 
-    public StoreKeeperWarehouse(String username) {
+    public RawMaterialOfficerWarehouse(String username) {
         super(username);
     }
 
-    public StoreKeeperWarehouse(String username, String passwordHash) {
+    public RawMaterialOfficerWarehouse(String username, String passwordHash) {
         super(username, passwordHash);
     }
+    
+    
     
 }

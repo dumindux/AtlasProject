@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class RawMaterialOrderTableProxy implements TableProxy{
 
     private Connection connection;
-    private String tableName="userinfo";
+    private String tableName="rawmaterial_order";
     private Statement stmt=null;
     
     private static RawMaterialOrderTableProxy instance=null;

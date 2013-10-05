@@ -156,7 +156,8 @@ public class UserTableProxy implements TableProxy{
             ResultSet results=stmt.executeQuery("select * from "+tableName+" where username='"+username+"'");
             ResultSetMetaData rsmd=results.getMetaData();
             int numberCols=rsmd.getColumnCount();
-            results.next();
+            if(!results.next())
+                return null;
            // System.out.println(results.getString(2));
             String type=results.getString(2);
             String passwordHash=results.getString(3);
@@ -171,12 +172,12 @@ public class UserTableProxy implements TableProxy{
     }
 
     @Override
-    public boolean add(Object obj) {
+    public boolean update(Object obj) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean update(Object obj) {
+    public boolean add(Object obj) {
         User user;
         try{
             user=(User)obj;
@@ -185,10 +186,25 @@ public class UserTableProxy implements TableProxy{
         {
             return false;
         }
+        
+        
         try {
+            stmt=connection.createStatement();
+            ResultSet results=stmt.executeQuery("select * from userinfo where username='"+user.getUsername()+"'");
+            stmt.close();
+            
+            if(!results.next())
+            {
+                stmt=connection.createStatement();
+                stmt.executeUpdate("INSERT INTO userinfo VALUES('"+user.getUsername()+"','"+user.getClass().getSimpleName().toLowerCase()+"','"+user.getPasswordHash()+"')");
+                stmt.close();
+                return true;
+            }
+            
             stmt=connection.createStatement();
             stmt.executeUpdate("UPDATE userinfo SET passwordHash='"+user.getPasswordHash()+"' where username='"+user.getUsername()+"'");
             stmt.close();
+            
             stmt=connection.createStatement();
             stmt.executeUpdate("UPDATE userinfo SET type='"+user.getClass().getSimpleName().toLowerCase()+"' where username='"+user.getUsername()+"'");
             stmt.close();

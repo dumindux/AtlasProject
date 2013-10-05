@@ -40,17 +40,85 @@ public class RawMaterialTypeInfoWarehouseTableProxy implements TableProxy{
     }
     @Override
     public Object get(String ID) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try{
+            stmt=connection.createStatement();
+            ResultSet results=stmt.executeQuery("SELECT * from rawmaterial_type_info_warehouse where type='"+ID+"'");
+            if(results.next())
+                return new TypeInfo(ID,results.getInt(2),results.getInt(3),results.getInt(4));
+            else
+                return null;
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
     }
 
     @Override
     public boolean add(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try{
+            TypeInfo fp=(TypeInfo)obj;
+            stmt=connection.createStatement();
+            ResultSet results=stmt.executeQuery("select * from "+tableName+" where type='"+fp.getType()+"'");
+            if(results.next())
+            {
+                
+                stmt.executeUpdate("UPDATE "+tableName+" SET total_amount="+fp.getTotalAmount()+",total_availlable="+fp.getTotalAvaillable()+",unit_price="+fp.getUnitPrice()+ " where type='"+fp.getType()+"'");
+                stmt.close();
+                return true;
+           
+            }
+            else
+            {
+                stmt.executeUpdate("INSERT INTO "+tableName+" VALUES('"+fp.getType()+"',"+fp.getUnitPrice()+","+fp.getTotalAmount()+","+fp.getTotalAvaillable()+")");
+                stmt.close();
+                return true;
+            }
+                 
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean update(Object obj) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public static class TypeInfo{
+        
+         private String type;
+         private int unitPrice;
+         private int totalAmount;
+         private int totalAvaillable;
+
+        public TypeInfo(String type, int unitPrice, int totalAmount, int totalAvaillable) {
+            this.type = type;
+            this.unitPrice = unitPrice;
+            this.totalAmount = totalAmount;
+            this.totalAvaillable = totalAvaillable;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public int getUnitPrice() {
+            return unitPrice;
+        }
+
+        public int getTotalAmount() {
+            return totalAmount;
+        }
+
+        public int getTotalAvaillable() {
+            return totalAvaillable;
+        }
+         
+        
     }
     
     public ResultSet getTableContents()

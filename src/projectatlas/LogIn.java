@@ -152,16 +152,29 @@ public class LogIn extends javax.swing.JFrame {
             if(user instanceof Manager)
             {
                 new ManagerWindow(user).setVisible(true);
-                User.currentUser=user.getUsername();
             }
-            else if(user instanceof StoreKeeper)
+            else if(user instanceof StoreKeeperFactory)
             {
-                new StoreKeeperWindow(user).setVisible(true);
+                new StoreKeeperFactoryWindow(user).setVisible(true);
+                
             }
-            else
+            else if(user instanceof StoreKeeperWarehouse)
             {
-                new MaterialOfficerWindow(user).setVisible(true);
+                new StoreKeeperFactoryWindow(user).setVisible(true);
             }
+            else if(user instanceof RawMaterialOfficerWarehouse)
+            {
+                new RawMaterialOfficerWarehouseWindow(user).setVisible(true);
+            }
+            else if(user instanceof RawMaterialOfficerFactory)
+            {
+                new RawMaterialOfficerFactoryWindow(user).setVisible(true);
+            }
+            else if(user instanceof FinishedMaterialOfficer)
+            {
+                new FinishedMaterialOfficerWindow(user).setVisible(true);
+            }
+            User.currentUser=user;
             this.setVisible(false);
         }
         else

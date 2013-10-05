@@ -10,11 +10,13 @@ package projectatlas;
  */
 public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
 
+    private User user;
     /**
      * Creates new form RawMaterialOfficerWarehouseWindow
      */
-    public RawMaterialOfficerWarehouseWindow() {
+    public RawMaterialOfficerWarehouseWindow(User user) {
         initComponents();
+        this.user=user;
     }
 
     /**
@@ -153,7 +155,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
 
         jLabel4.setText("Amount:");
 
-        jLabel1.setText("Value:");
+        jLabel1.setText("Unit price:");
 
         jButton1.setText("Edit last entry");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -185,7 +187,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2))
                     .addComponent(jSeparator1))
@@ -255,6 +257,9 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        RawMaterialWarehouse store=new RawMaterialWarehouse(-1,0,Integer.parseInt(jTextField2.getText()),jTextField1.getText(),Integer.parseInt(jTextField3.getText()));
+        RawMaterialWarehouseTableProxy proxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
+        proxy.add(store);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -295,7 +300,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RawMaterialOfficerWarehouseWindow().setVisible(true);
+                new RawMaterialOfficerWarehouseWindow(null).setVisible(true);
             }
         });
     }

@@ -9,12 +9,14 @@ package projectatlas;
  * @author Nuwan Prabhath
  */
 public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
-
+    
+    private User user;
     /**
      * Creates new form RawMaterialOfficerWindow
      */
-    public RawMaterialOfficerFactoryWindow() {
+    public RawMaterialOfficerFactoryWindow(User user) {
         initComponents();
+        this.user=user;
     }
 
     /**
@@ -210,7 +212,7 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RawMaterialOfficerFactoryWindow().setVisible(true);
+                new RawMaterialOfficerFactoryWindow(null).setVisible(true);
             }
         });
     }

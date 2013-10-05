@@ -4,6 +4,9 @@
  */
 package projectatlas;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 /**
  *
  * @author Dumindu
@@ -14,6 +17,16 @@ public abstract class Order {
 
     public Order(String orderID) {
         this.orderID = orderID;
+        Date date=new Date();
+        timestamp=new Timestamp(date.getTime()).toString();
     }    
+
+    public Order() {
+        
+        Date date=new Date();
+        timestamp=new Timestamp(date.getTime()).toString();
+        
+    }
+    
     
 }

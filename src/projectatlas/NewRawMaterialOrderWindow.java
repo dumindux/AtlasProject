@@ -11,12 +11,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Dumindu
  */
-public class NewRawMaterialOrder extends javax.swing.JFrame {
+public class NewRawMaterialOrderWindow extends javax.swing.JFrame {
     private int tablePosition=-1; //table position of the jTable1
     /**
-     * Creates new form NewRawMaterialOrder
+     * Creates new form NewRawMaterialOrderWindow
      */
-    public NewRawMaterialOrder() {
+    public NewRawMaterialOrderWindow() {
         initComponents();
         ResultSet results=RawMaterialTypeInfoWarehouseTableProxy.getRawMaterialTypeInfoWarehouseTableProxy().getTableContents();
         try{
@@ -59,6 +59,7 @@ public class NewRawMaterialOrder extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +110,11 @@ public class NewRawMaterialOrder extends javax.swing.JFrame {
         });
 
         jButton3.setText("Ok");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Cancel");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -133,22 +139,23 @@ public class NewRawMaterialOrder extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4))
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton4))
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -157,7 +164,9 @@ public class NewRawMaterialOrder extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -197,9 +206,38 @@ public class NewRawMaterialOrder extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        jTable1.setValueAt(jComboBox1.getSelectedItem(), ++tablePosition, 0);
-        jTable1.setValueAt(Integer.parseInt(jTextField1.getText()), tablePosition, 1);
+        String type=(String)jComboBox1.getSelectedItem();
+        System.out.println(type);
+        int amount=Integer.parseInt(jTextField1.getText());
+        RawMaterialTypeInfoWarehouseTableProxy proxy=RawMaterialTypeInfoWarehouseTableProxy.getRawMaterialTypeInfoWarehouseTableProxy();
+        RawMaterialTypeInfoWarehouseTableProxy.TypeInfo info=(RawMaterialTypeInfoWarehouseTableProxy.TypeInfo)proxy.get(type);
+        if(info.getTotalAvaillable()<amount)
+        {
+            jTextField1.setText(info.getTotalAvaillable()+"");
+            jLabel3.setText("Maximum availlable is "+info.getTotalAvaillable());
+            return;
+        }
+        jTable1.setValueAt(type, ++tablePosition, 0);
+        jTable1.setValueAt(amount, tablePosition, 1);
+        if(tablePosition==jTable1.getRowCount()-1)
+                {
+                    DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
+                    model.addRow(new Object[]{null,null,null}); 
+                }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        TemporaryOrder tempOrder=new TemporaryOrder();
+        for(int i=0;i<=tablePosition;i++)
+        {
+            
+            tempOrder.addItem((String)jTable1.getValueAt(i, 0),(Integer)jTable1.getValueAt(i, 1));
+            
+        }
+        Manager manager=(Manager)User.currentUser;
+        manager.placeOrder(tempOrder);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,20 +256,20 @@ public class NewRawMaterialOrder extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewRawMaterialOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewRawMaterialOrderWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewRawMaterialOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewRawMaterialOrderWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewRawMaterialOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewRawMaterialOrderWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewRawMaterialOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewRawMaterialOrderWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewRawMaterialOrder().setVisible(true);
+                new NewRawMaterialOrderWindow().setVisible(true);
             }
         });
     }
@@ -243,6 +281,7 @@ public class NewRawMaterialOrder extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;

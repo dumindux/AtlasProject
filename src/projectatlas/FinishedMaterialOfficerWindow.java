@@ -12,12 +12,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
     private int tablePosition=-1;
-
+    private User user;
     /**
      * Creates new form FinishedMaterialOfficerWindow
      */
-    public FinishedMaterialOfficerWindow() {
+    public FinishedMaterialOfficerWindow(User user) {
         initComponents();
+        this.user=user;
     }
 
     /**
@@ -161,7 +162,7 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
                 .addGap(332, 332, 332))
         );
 
-        jTabbedPane2.addTab("Relese products", jPanel1);
+        jTabbedPane2.addTab("Release products", jPanel1);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -347,6 +348,12 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
         jTextField1.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
+        if(tablePosition==jTable1.getRowCount()-1)
+        {
+            DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
+            model.addRow(new Object[]{null,null,null});
+            
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -369,6 +376,7 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
             }
         }
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
         model.setRowCount(4);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -402,7 +410,7 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FinishedMaterialOfficerWindow().setVisible(true);
+                new FinishedMaterialOfficerWindow(null).setVisible(true);
             }
         });
     }

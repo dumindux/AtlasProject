@@ -42,15 +42,33 @@ public class UserFactory {
             lst.add(usr);
             return usr;
         }
-        else if(type.equals("storekeeper"))
+        else if(type.equals("storekeeperwarehouse"))
         {
-            User usr=new StoreKeeper(username);
+            User usr=new StoreKeeperWarehouse(username);
             lst.add(usr);
             return usr;
         }
-        else if(type.equals("materialofficer"))
+        else if(type.equals("storekeeperfactory"))
         {
-            User usr=new MaterialOfficer(username);
+            User usr=new StoreKeeperFactory(username);
+            lst.add(usr);
+            return usr;
+        }
+        else if(type.equals("rawmaterialofficerwarehouse"))
+        {
+            User usr=new RawMaterialOfficerWarehouse(username);
+            lst.add(usr);
+            return usr;
+        }
+        else if(type.equals("rawmaterialofficerfactory"))
+        {
+            User usr=new RawMaterialOfficerFactory(username);
+            lst.add(usr);
+            return usr;
+        }
+        else if(type.equals("finishedmaterialofficer"))
+        {
+            User usr=new FinishedMaterialOfficer(username);
             lst.add(usr);
             return usr;
         }
@@ -61,19 +79,37 @@ public class UserFactory {
     {
         if(type.equals("manager"))
         {
-            User usr= new Manager(username,passwordHash);
+            User usr=new Manager(username,passwordHash);
             lst.add(usr);
             return usr;
         }
-        else if(type.equals("storekeeper"))
+        else if(type.equals("storekeeperwarehouse"))
         {
-            User usr= new StoreKeeper(username,passwordHash);
+            User usr=new StoreKeeperWarehouse(username,passwordHash);
             lst.add(usr);
             return usr;
         }
-        else if(type.equals("materialofficer"))
+        else if(type.equals("storekeeperfactory"))
         {
-            User usr= new MaterialOfficer(username,passwordHash);
+            User usr=new StoreKeeperFactory(username,passwordHash);
+            lst.add(usr);
+            return usr;
+        }
+        else if(type.equals("rawmaterialofficerwarehouse"))
+        {
+            User usr=new RawMaterialOfficerWarehouse(username,passwordHash);
+            lst.add(usr);
+            return usr;
+        }
+        else if(type.equals("rawmaterialofficerfactory"))
+        {
+            User usr=new RawMaterialOfficerFactory(username,passwordHash);
+            lst.add(usr);
+            return usr;
+        }
+        else if(type.equals("finishedmaterialofficer"))
+        {
+            User usr=new FinishedMaterialOfficer(username,passwordHash);
             lst.add(usr);
             return usr;
         }

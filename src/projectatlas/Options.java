@@ -189,7 +189,7 @@ public class Options extends javax.swing.JDialog {
         try {
             if(UserPasswordMatch.changePassword(user, oldPassword, newPassword1))
             {
-                usrProxy.update(user);
+                usrProxy.add(user);
                 jPasswordField2.setText("");
                 jPasswordField3.setText("");
                 jPasswordField1.setText("");
