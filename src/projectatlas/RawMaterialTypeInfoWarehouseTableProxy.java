@@ -117,6 +117,22 @@ public class RawMaterialTypeInfoWarehouseTableProxy implements TableProxy{
         public int getTotalAvaillable() {
             return totalAvaillable;
         }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public void setUnitPrice(int unitPrice) {
+            this.unitPrice = unitPrice;
+        }
+
+        public void setTotalAmount(int totalAmount) {
+            this.totalAmount = totalAmount;
+        }
+
+        public void setTotalAvaillable(int totalAvaillable) {
+            this.totalAvaillable = totalAvaillable;
+        }
          
         
     }

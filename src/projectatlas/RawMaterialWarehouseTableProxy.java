@@ -61,10 +61,36 @@ public class RawMaterialWarehouseTableProxy implements TableProxy{
     @Override
     public boolean add(Object obj) {
         /*
-         * Has to update the raw_material_type_info table
+         * Has to update the raw_material_type_info_warehouse table
+         * this adds or updates a rawMaterial batch in the database
+         * this also modifies the raw_material_type_info_warehouse table
          */
         try{
             RawMaterialWarehouse rm=(RawMaterialWarehouse)obj;
+            RawMaterialTypeInfoWarehouseTableProxy proxy=RawMaterialTypeInfoWarehouseTableProxy.getRawMaterialTypeInfoWarehouseTableProxy();
+            RawMaterialTypeInfoWarehouseTableProxy.TypeInfo typeInfo=(RawMaterialTypeInfoWarehouseTableProxy.TypeInfo)proxy.get(rm.getType());
+            if(rm.getBatchNumber()!=-1)
+            {
+                stmt=connection.createStatement();
+                ResultSet results1=stmt.executeQuery("SELECT * from "+tableName+" where batch_number_warehouse="+rm.getBatchNumber());
+                if(results1.next())
+                {
+                    stmt.close();
+                    typeInfo.setTotalAmount(typeInfo.getTotalAmount()+rm.getAvailAmount()+rm.getResAmount()-results1.getInt(2)-results1.getInt(3));
+                    typeInfo.setTotalAvaillable(typeInfo.getTotalAvaillable()+rm.getAvailAmount()-results1.getInt(3));
+                    typeInfo.setUnitPrice(rm.getUnitPrice());
+                    proxy.add(typeInfo);
+                    stmt=connection.createStatement();
+                    stmt.executeUpdate("UPDATE "+tableName+" SET res_amount="+rm.getResAmount()+",avail_amount="+rm.getAvailAmount()+",unit_price="+rm.getUnitPrice()+"where type='"+rm.getType()+"'");
+                    stmt.close();
+                    return true;
+                }
+                else
+                {
+                    System.out.println("Error");
+                    return false;
+                }
+            }
             stmt=connection.createStatement();
             ResultSet results=stmt.executeQuery("SELECT MAX(batch_number_warehouse) from "+tableName);
             int nextNum;
@@ -78,6 +104,19 @@ public class RawMaterialWarehouseTableProxy implements TableProxy{
             }
             stmt.executeUpdate("INSERT INTO "+tableName+" VALUES('"+rm.getType()+"',"+rm.getResAmount()+","+rm.getAvailAmount()+","+nextNum+","+rm.getUnitPrice()+")");
             stmt.close();
+            
+            if(typeInfo==null)
+            {
+                typeInfo=new RawMaterialTypeInfoWarehouseTableProxy.TypeInfo(rm.getType(),rm.getUnitPrice(),rm.getAvailAmount()+rm.getResAmount(),rm.getAvailAmount());
+                proxy.add(typeInfo);
+            }
+            else
+            {
+                typeInfo.setTotalAmount(typeInfo.getTotalAmount()+rm.getAvailAmount()+rm.getResAmount());
+                typeInfo.setTotalAvaillable(typeInfo.getTotalAvaillable()+rm.getAvailAmount());
+                typeInfo.setUnitPrice(rm.getUnitPrice());
+                proxy.add(typeInfo);
+            }
             return true;
                  
         }

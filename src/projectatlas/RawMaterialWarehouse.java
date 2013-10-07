@@ -10,7 +10,7 @@ package projectatlas;
  */
 public class RawMaterialWarehouse {
     
-    private int batchNumber;
+    private int batchNumber=-1;
     private int resAmount;
     private int availAmount;
     private String type;
