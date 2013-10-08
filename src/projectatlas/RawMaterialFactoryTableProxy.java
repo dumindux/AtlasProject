@@ -111,5 +111,18 @@ public class RawMaterialFactoryTableProxy implements TableProxy{
     public boolean update(Object obj) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+    public ResultSet getTypeOrderByBatchNumber(String type)
+    {
+        try {
+            /*returns a resultset containing the data where type equals the given  
+             *type and sorted according to batch number. 
+             */
+            stmt=connection.createStatement();
+            ResultSet results=stmt.executeQuery("select * from "+tableName+" where type='"+type+"' order by batch_number");
+            return results;
+        } catch (SQLException ex) {
+            Logger.getLogger(RawMaterialOrderTableProxy.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 }

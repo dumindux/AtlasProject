@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -36,10 +37,16 @@ public class FinishedProductWindow extends javax.swing.JFrame {
             results.next();
             for(int i=0;;i++)
             {
-                jTable1.setValueAt(results.getString(2), i, 0);
-                jTable1.setValueAt(Integer.toString(Integer.parseInt(results.getString(4))+Integer.parseInt(results.getString(5))), i, 1);
-                jTable1.setValueAt(results.getString(3), i, 2);
-                jTable1.setValueAt(Integer.toString(((Integer.parseInt(results.getString(5))+Integer.parseInt(results.getString(4))))*Integer.parseInt(results.getString(3))), i, 3);
+                jTable1.setValueAt(results.getString(1), i, 0);
+                jTable1.setValueAt(Integer.toString(Integer.parseInt(results.getString(2))+Integer.parseInt(results.getString(3))), i, 1);
+                jTable1.setValueAt(results.getString(4), i, 2);
+                jTable1.setValueAt(Integer.toString(((Integer.parseInt(results.getString(2))+Integer.parseInt(results.getString(3))))*Integer.parseInt(results.getString(4))), i, 3);
+                
+                if(i==jTable1.getRowCount()-1)
+                {
+                    DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
+                    model.addRow(new Object[]{null,null,null}); 
+                }
                 
                 if(results.isLast())
                     return;
@@ -61,6 +68,7 @@ public class FinishedProductWindow extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(598, 383));
 
@@ -88,21 +96,30 @@ public class FinishedProductWindow extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Finished Products");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76))
         );
 
         pack();
@@ -143,6 +160,7 @@ public class FinishedProductWindow extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

@@ -4,6 +4,15 @@
  */
 package projectatlas;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Nuwan Prabhath
@@ -15,8 +24,21 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
      * Creates new form RawMaterialOfficerWarehouseWindow
      */
     public RawMaterialOfficerWarehouseWindow(User user) {
-        initComponents();
-        this.user=user;
+        try {
+            initComponents();
+            this.user=user;
+            RawMaterialOrderTableProxy proxy=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy();
+            ResultSet results1=proxy.getContents();
+            while(results1.next())
+            {
+                if(results1.getBoolean(3))
+                {
+                    jComboBox1.addItem(results1.getInt(1));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RawMaterialOfficerWarehouseWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -47,7 +69,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -58,10 +79,20 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         setResizable(false);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboBox1PropertyChange(evt);
+            }
+        });
 
         jLabel5.setText("Order ID:");
 
         jButton4.setText("Released");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Notify storekeeper");
 
@@ -73,17 +104,25 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Type", "Amount"
+                "Batch", "Amount"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
+        jTable3.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(jTable3);
 
         jLabel10.setText("Order infromation:");
@@ -157,13 +196,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
 
         jLabel1.setText("Unit price:");
 
-        jButton1.setText("Edit last entry");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Add raw material to inventory");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -172,9 +204,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel3)
@@ -213,9 +242,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jLabel1)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Add to inventory", jPanel2);
@@ -266,9 +293,47 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jComboBox1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox1PropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        RawMaterialOrderTableProxy proxy=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy();
+        RawMaterialOrder order=(RawMaterialOrder)proxy.get((String)jComboBox1.getSelectedItem());
+        try {
+            List<RawMaterialOrder.ItemInfo> lst=order.getItems();
+            for(int i=0;;i++)
+            {
+                
+               // System.out.println(i);
+                jTable3.setValueAt(lst.get(i).getBatchNumber(), i, 0);
+                jTable3.setValueAt(lst.get(i).getAmount(), i, 1);
+                
+                if(i==jTable3.getRowCount()-1)
+                {
+                    DefaultTableModel model=(DefaultTableModel)jTable3.getModel();
+                    model.addRow(new Object[]{null,null,null}); 
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+    }//GEN-LAST:event_jComboBox1PropertyChange
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        RawMaterialOrderTableProxy orderProxy=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy();
+        RawMaterialWarehouseTableProxy rawProxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
+        RawMaterialOrder order=(RawMaterialOrder)orderProxy.get((String)jComboBox1.getSelectedItem());
+        List<RawMaterialOrder.ItemInfo> itemList=order.getItems();
+        order.setIsActive(false);
+        orderProxy.add(order);
+        for(RawMaterialOrder.ItemInfo itemInfo:itemList)
+        {
+            RawMaterialWarehouse rm=(RawMaterialWarehouse)rawProxy.get(""+itemInfo.getBatchNumber());
+            rm.setResAmount(rm.getResAmount()-itemInfo.getAmount());
+            rawProxy.add(rm);
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,7 +370,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

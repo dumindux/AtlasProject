@@ -13,8 +13,9 @@ import java.util.Date;
  */
 public abstract class Order {
     private String timestamp;
-    private String orderID;
-
+    private String orderID="-1";
+    private boolean isActive=true;
+    
     public Order(String orderID) {
         this.orderID = orderID;
         Date date=new Date();
@@ -27,6 +28,32 @@ public abstract class Order {
         timestamp=new Timestamp(date.getTime()).toString();
         
     }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    
     
     
 }

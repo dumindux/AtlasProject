@@ -44,7 +44,7 @@ public class RawMaterialWarehouseTableProxy implements TableProxy{
         try {
             int id=Integer.parseInt(ID);
             stmt=connection.createStatement();
-            ResultSet results=stmt.executeQuery("SELECT * from"+tableName+"where batch_number_warehouse="+id);
+            ResultSet results=stmt.executeQuery("SELECT * from "+tableName+" where batch_number_warehouse="+id);
             if(results.next())
             {
                 return new RawMaterialWarehouse(results.getInt(4),results.getInt(2),results.getInt(3),results.getString(1),results.getInt(5));
