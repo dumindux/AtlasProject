@@ -21,6 +21,7 @@ public class RawMaterialWindow extends javax.swing.JFrame {
     public RawMaterialWindow() {
         initComponents();
         updateRawMaterialWindowTable();
+        this.setLocationRelativeTo(null);
     }
 
     private void updateRawMaterialWindowTable()

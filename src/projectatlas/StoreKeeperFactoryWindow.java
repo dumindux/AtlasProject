@@ -23,6 +23,11 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
         this.user=user;
         this.updateFinishedProductWindowTable();
         this.updateRawMaterialWindowTable();
+        this.setLocationRelativeTo(null);
+        String username="Not logged in";
+        if(user!=null)
+            username=user.getUsername();
+        this.jLabel9.setText(username);
     }
     
     private void updateFinishedProductWindowTable(){
@@ -125,7 +130,7 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Factory Store Keeper");
+        setTitle("Factory Storekeeper");
         setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -213,13 +218,18 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
         jLabel9.setText("Logged user");
 
         jButton3.setText("Logout");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("New notifications:");
 
         jLabel11.setText("number");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel12.setText("Factory Store Keeper");
+        jLabel12.setText("Factory Storekeeper");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -329,6 +339,12 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         new FinishedProductWindow().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new LogIn().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

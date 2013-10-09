@@ -22,6 +22,7 @@ public class FinishedProductWindow extends javax.swing.JFrame {
     public FinishedProductWindow() {
         initComponents();
         updateFinishedProductWindowTable();
+        this.setLocationRelativeTo(null);
     }
 
     private void updateFinishedProductWindowTable()

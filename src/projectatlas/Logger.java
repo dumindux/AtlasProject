@@ -62,6 +62,7 @@ public class Logger {
         }
         
     }
+
     
     public static void main(String[] args) {
         Date date=new Date();

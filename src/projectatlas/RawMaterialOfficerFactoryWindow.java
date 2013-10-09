@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,26 +23,32 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
      * Creates new form RawMaterialOfficerWindow
      */
     public RawMaterialOfficerFactoryWindow(User user) {
-        try {
             initComponents();
             this.user=user;
+            this.setLocationRelativeTo(null);
+            refresh();
+    }
+
+    
+    private void refresh()
+    {
+        try {
             ResultSet results=RawMaterialTypeInfoTableProxy.getRawMaterialTypeInfoTableProxy().getTableContents();
-            while(results.next())
-            {
-                this.jComboBox2.addItem(results.getString(1));    
-                
-            }
-            results=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy().getContents();
-            while(results.next())
-            {
-                if(!results.getBoolean(3))
-                    this.jComboBox1.addItem(results.getInt(1));
-            }
+                while(results.next())
+                {
+                    this.jComboBox2.addItem(results.getString(1));    
+                    
+                }
+                results=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy().getContents();
+                while(results.next())
+                {
+                    if(!results.getBoolean(3))
+                        this.jComboBox1.addItem(results.getInt(1));
+                }
         } catch (SQLException ex) {
             Logger.getLogger(RawMaterialOfficerFactoryWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,7 +72,6 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -82,6 +88,7 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Factory Rawmaterial Officer");
         setResizable(false);
 
         jLabel1.setText("Logged in as:");
@@ -123,13 +130,6 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Edit last entry");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jButton4.setText("Notify storekeeper");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,9 +147,7 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(jButton4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,21 +169,20 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
                                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(3, 3, 3)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel7))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(54, 54, 54))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel5)
-                .addGap(28, 28, 28)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
@@ -196,13 +193,11 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addGap(10, 10, 10)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
+                .addGap(17, 17, 17)
                 .addComponent(jButton4)
-                .addGap(70, 70, 70))
+                .addGap(103, 103, 103))
         );
 
         jTabbedPane1.addTab("Add Material", jPanel1);
@@ -341,7 +336,6 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -355,7 +349,19 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         List<RawMaterialOrder.ItemInfo> lst=selectedOrder.getItems();
-        RawMaterialOrder.ItemInfo temp=new RawMaterialOrder.ItemInfo(Integer.parseInt(this.jTextField1.getText()), Integer.parseInt(jTextField2.getText()));
+        int batch,amount;
+        try{
+            batch=Integer.parseInt(this.jTextField1.getText());
+            amount=Integer.parseInt(jTextField2.getText());
+        }
+        catch(NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(this,"Enter a valid number", "Number format error", JOptionPane.ERROR_MESSAGE);
+            jTextField1.setText("");
+            jTextField2.setText("");
+            return;
+        }
+        RawMaterialOrder.ItemInfo temp=new RawMaterialOrder.ItemInfo(batch,amount);
         if(lst.contains(temp)){
             int index=lst.indexOf(temp);
             if(temp.getAmount()!=lst.get(index).getAmount())
@@ -371,14 +377,12 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
                 RawMaterialWarehouse rmw=(RawMaterialWarehouse)proxy2.get(""+temp.getBatchNumber());
                 RawMaterialFactory rmf=new RawMaterialFactory(temp.getBatchNumber(), temp.getAmount(), rmw.getType(), rmw.getUnitPrice());
                 proxy.add(rmf);
+                refresh();
+                jLabel7.setText("Successfully added to the inventory");
             }
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -473,7 +477,6 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;

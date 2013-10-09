@@ -67,7 +67,6 @@ public class RawMaterialFactoryTableProxy implements TableProxy{
             RawMaterialFactory rm=(RawMaterialFactory)obj;
             stmt=connection.createStatement();
             ResultSet results=stmt.executeQuery("SELECT * from "+tableName+" where batch_number="+rm.getBatchNumber());
-            stmt.close();
             RawMaterialTypeInfoTableProxy proxy=RawMaterialTypeInfoTableProxy.getRawMaterialTypeInfoTableProxy();
             RawMaterialTypeInfoTableProxy.TypeInfo typeInfo=(RawMaterialTypeInfoTableProxy.TypeInfo)proxy.get(rm.getType());
             if(results.next())
@@ -85,7 +84,7 @@ public class RawMaterialFactoryTableProxy implements TableProxy{
             {
                 stmt=connection.createStatement();
                // results=stmt.executeQuery("SELECT * from "+tableName+"where type='"+rm.getType()+"'");
-                stmt.executeUpdate("INSERT INTO "+tableName+"VALUES("+rm.getBatchNumber()+","+rm.getBatchAmount()+","+rm.getType()+")");
+                stmt.executeUpdate("INSERT INTO "+tableName+" VALUES("+rm.getBatchNumber()+","+rm.getBatchAmount()+",'"+rm.getType()+"',"+rm.getUnitPrice()+")");
                 stmt.close();
                 if(typeInfo==null)
                 {

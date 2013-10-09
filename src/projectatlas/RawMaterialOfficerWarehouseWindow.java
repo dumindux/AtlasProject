@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -283,7 +284,20 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        RawMaterialWarehouse store=new RawMaterialWarehouse(-1,0,Integer.parseInt(jTextField2.getText()),jTextField1.getText(),Integer.parseInt(jTextField3.getText()));
+        int availAmount,unitPrice;
+        try{
+            availAmount=Integer.parseInt(jTextField2.getText());
+            unitPrice=Integer.parseInt(jTextField3.getText());
+        }
+        catch(NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(this,"Enter a valid number", "Number format error", JOptionPane.ERROR_MESSAGE);
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            return;
+        }
+        RawMaterialWarehouse store=new RawMaterialWarehouse(-1,0,availAmount,jTextField1.getText(),unitPrice);
         RawMaterialWarehouseTableProxy proxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
         proxy.add(store);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -301,7 +315,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         RawMaterialOrderTableProxy orderProxy=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy();
         RawMaterialWarehouseTableProxy rawProxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
-        RawMaterialOrder order=(RawMaterialOrder)orderProxy.get((String)jComboBox1.getSelectedItem());
+        RawMaterialOrder order=(RawMaterialOrder)orderProxy.get((Integer)jComboBox1.getSelectedItem()+"");
         List<RawMaterialOrder.ItemInfo> itemList=order.getItems();
         order.setIsActive(false);
         orderProxy.add(order);
@@ -311,16 +325,16 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
             rm.setResAmount(rm.getResAmount()-itemInfo.getAmount());
             rawProxy.add(rm);
         }
-        
+        this.jComboBox1.removeAllItems();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         RawMaterialOrderTableProxy proxy=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy();
-        RawMaterialOrder order=(RawMaterialOrder)proxy.get((String)jComboBox1.getSelectedItem());
+        RawMaterialOrder order=(RawMaterialOrder)proxy.get((Integer)jComboBox1.getSelectedItem()+"");
         try {
             List<RawMaterialOrder.ItemInfo> lst=order.getItems();
-            for(int i=0;;i++)
+            for(int i=0;i<lst.size();i++)
             {
                 
                // System.out.println(i);
