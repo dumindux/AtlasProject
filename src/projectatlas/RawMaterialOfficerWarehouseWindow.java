@@ -55,7 +55,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
@@ -78,7 +77,11 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
         jComboBox1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jComboBox1PropertyChange(evt);
@@ -93,8 +96,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-
-        jButton5.setText("Notify storekeeper");
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,11 +144,9 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton5))
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton4))
                             .addComponent(jLabel10))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -166,8 +165,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jButton5))
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -295,6 +293,28 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
 
     private void jComboBox1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox1PropertyChange
         // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jComboBox1PropertyChange
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        RawMaterialOrderTableProxy orderProxy=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy();
+        RawMaterialWarehouseTableProxy rawProxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
+        RawMaterialOrder order=(RawMaterialOrder)orderProxy.get((String)jComboBox1.getSelectedItem());
+        List<RawMaterialOrder.ItemInfo> itemList=order.getItems();
+        order.setIsActive(false);
+        orderProxy.add(order);
+        for(RawMaterialOrder.ItemInfo itemInfo:itemList)
+        {
+            RawMaterialWarehouse rm=(RawMaterialWarehouse)rawProxy.get(""+itemInfo.getBatchNumber());
+            rm.setResAmount(rm.getResAmount()-itemInfo.getAmount());
+            rawProxy.add(rm);
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
         RawMaterialOrderTableProxy proxy=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy();
         RawMaterialOrder order=(RawMaterialOrder)proxy.get((String)jComboBox1.getSelectedItem());
         try {
@@ -316,24 +336,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
             Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
-    }//GEN-LAST:event_jComboBox1PropertyChange
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        RawMaterialOrderTableProxy orderProxy=RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy();
-        RawMaterialWarehouseTableProxy rawProxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
-        RawMaterialOrder order=(RawMaterialOrder)orderProxy.get((String)jComboBox1.getSelectedItem());
-        List<RawMaterialOrder.ItemInfo> itemList=order.getItems();
-        order.setIsActive(false);
-        orderProxy.add(order);
-        for(RawMaterialOrder.ItemInfo itemInfo:itemList)
-        {
-            RawMaterialWarehouse rm=(RawMaterialWarehouse)rawProxy.get(""+itemInfo.getBatchNumber());
-            rm.setResAmount(rm.getResAmount()-itemInfo.getAmount());
-            rawProxy.add(rm);
-        }
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -373,7 +376,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

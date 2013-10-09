@@ -73,6 +73,7 @@ public class RawMaterialOrderTableProxy implements TableProxy {
             ResultSet results1=stmt.executeQuery("SELECT * from "+tableName+" where orderID="+order.getOrderID());
             if(results1.next())
             {
+                System.out.println("tada");
                 stmt.close();
                 stmt=connection.createStatement();
                 stmt.executeUpdate("UPDATE "+tableName+" SET is_active="+order.isIsActive()+" where orderID="+order.getOrderID());
@@ -81,25 +82,26 @@ public class RawMaterialOrderTableProxy implements TableProxy {
             }
             else
             {
+                System.out.println("tata");
                 stmt=connection.createStatement();
                 ResultSet results2=stmt.executeQuery("SELECT MAX(orderID) from "+tableName);
                 int nextID;
                 if(results2.next())
                 {
-                    nextID=results2.getInt(1);
+                    nextID=results2.getInt(1)+1;
                 }
                 else
                 {
                     nextID=1;
                 }
+                System.out.println("id-"+nextID);
                 stmt.close();
                 stmt=connection.createStatement();
-                stmt.executeUpdate("INSERT INTO "+tableName+" VALUES("+nextID+","+order.getTimestamp()+","+order.isIsActive()+")");
+                stmt.executeUpdate("INSERT INTO "+tableName+" VALUES("+nextID+",'"+order.getTimestamp()+"',"+order.isIsActive()+")");
                 List<RawMaterialOrder.ItemInfo> list=order.getItems();
                 for(RawMaterialOrder.ItemInfo itemInfo:list)
                 {
-                    stmt.executeUpdate("INSERT INTO "+tableName+" VALUES("+order.getOrderID()+","+itemInfo.getAmount()+","+itemInfo.getBatchNumber()+")");
-                    
+                    stmt.executeUpdate("INSERT INTO order_rawmaterial VALUES("+nextID+","+itemInfo.getAmount()+","+itemInfo.getBatchNumber()+")");             
                 }
                 stmt.close();
                 return true;

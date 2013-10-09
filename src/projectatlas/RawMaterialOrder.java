@@ -77,7 +77,19 @@ public class RawMaterialOrder extends Order{
             }
             return true;
         }
+
+        @Override
+        public String toString() {
+            return "ItemInfo{" + "batchNumber=" + batchNumber + ", amount=" + amount + '}';
+        }
         
         
     }
+
+    @Override
+    public String toString() {
+        return "RawMaterialOrder{" + "itemList=" + itemList + '}';
+    }
+    
+    
 }

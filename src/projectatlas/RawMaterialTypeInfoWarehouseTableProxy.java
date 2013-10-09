@@ -58,6 +58,7 @@ public class RawMaterialTypeInfoWarehouseTableProxy implements TableProxy{
     public boolean add(Object obj) {
         try{
             TypeInfo fp=(TypeInfo)obj;
+            System.out.println(fp.totalAmount+" "+fp.getTotalAvaillable());
             stmt=connection.createStatement();
             ResultSet results=stmt.executeQuery("select * from "+tableName+" where type='"+fp.getType()+"'");
             if(results.next())

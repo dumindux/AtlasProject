@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 class TemporaryOrder {
     
-    private ArrayList<OrderItem> itmList;
+    private ArrayList<OrderItem> itmList=new ArrayList<OrderItem>();
     
     public void addItem(String type,int amount){
         itmList.add(new OrderItem(type, amount));
@@ -50,9 +50,21 @@ class TemporaryOrder {
         public void setAmount(int amount) {
             this.amount = amount;
         }
+
+        @Override
+        public String toString() {
+            return "OrderItem{" + "type=" + type + ", amount=" + amount + '}';
+        }
        
         
        
        
    }
+
+    @Override
+    public String toString() {
+        return "TemporaryOrder{" + "itmList=" + itmList + '}';
+    }
+   
+   
 }

@@ -75,13 +75,15 @@ public class RawMaterialWarehouseTableProxy implements TableProxy{
                 ResultSet results1=stmt.executeQuery("SELECT * from "+tableName+" where batch_number_warehouse="+rm.getBatchNumber());
                 if(results1.next())
                 {
-                    stmt.close();
+                    //stmt.close();
                     typeInfo.setTotalAmount(typeInfo.getTotalAmount()+rm.getAvailAmount()+rm.getResAmount()-results1.getInt(2)-results1.getInt(3));
+                    System.out.println(typeInfo.getTotalAmount()+" "+rm.getAvailAmount()+" "+rm.getResAmount()+" "+results1.getInt(2)+" "+results1.getInt(3));
                     typeInfo.setTotalAvaillable(typeInfo.getTotalAvaillable()+rm.getAvailAmount()-results1.getInt(3));
+                    System.out.println(typeInfo.getTotalAvaillable()+" "+rm.getAvailAmount()+" "+results1.getInt(3));
                     typeInfo.setUnitPrice(rm.getUnitPrice());
                     proxy.add(typeInfo);
                     stmt=connection.createStatement();
-                    stmt.executeUpdate("UPDATE "+tableName+" SET res_amount="+rm.getResAmount()+",avail_amount="+rm.getAvailAmount()+",unit_price="+rm.getUnitPrice()+"where type='"+rm.getType()+"'");
+                    stmt.executeUpdate("UPDATE "+tableName+" SET res_amount="+rm.getResAmount()+",avail_amount="+rm.getAvailAmount()+",unit_price="+rm.getUnitPrice()+" where batch_number_warehouse="+rm.getBatchNumber()+"");
                     stmt.close();
                     return true;
                 }

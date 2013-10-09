@@ -191,6 +191,7 @@ public class NewRawMaterialOrderWindow extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.tablePosition--;
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         int[] rows = jTable1.getSelectedRows();
         for (int i = 0; i < rows.length; i++) {
@@ -236,6 +237,7 @@ public class NewRawMaterialOrderWindow extends javax.swing.JFrame {
             
         }
         Manager manager=(Manager)User.currentUser;
+        System.out.println(tempOrder);
         manager.placeOrder(tempOrder);
     }//GEN-LAST:event_jButton3ActionPerformed
 

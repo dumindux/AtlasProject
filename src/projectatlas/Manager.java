@@ -38,11 +38,21 @@ public class Manager extends User{
                     if(res.getInt(3)<orderItem.getAmount())
                     {
                         newOrder.addItem(res.getInt(4), res.getInt(3));
+                        RawMaterialWarehouseTableProxy proxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
+                        RawMaterialWarehouse rmw=(RawMaterialWarehouse)proxy.get(""+res.getInt(4));
+                        rmw.setAvailAmount(rmw.getAvailAmount()-res.getInt(3));
+                        rmw.setResAmount(rmw.getResAmount()+res.getInt(3));
+                        proxy.add(rmw);
                         orderItem.setAmount(orderItem.getAmount()-res.getInt(3));
                         
                     }
                     else
                     {
+                        RawMaterialWarehouseTableProxy proxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
+                        RawMaterialWarehouse rmw=(RawMaterialWarehouse)proxy.get(""+res.getInt(4));
+                        rmw.setAvailAmount(rmw.getAvailAmount()-orderItem.getAmount());
+                        rmw.setResAmount(rmw.getResAmount()+orderItem.getAmount());
+                        proxy.add(rmw);
                         newOrder.addItem(res.getInt(4), orderItem.getAmount());
                         break;
                     }
@@ -52,6 +62,7 @@ public class Manager extends User{
                 Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        System.out.println(newOrder);
         orderProxy.add(newOrder);
     }
     
