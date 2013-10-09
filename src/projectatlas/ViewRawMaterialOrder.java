@@ -23,6 +23,7 @@ public class ViewRawMaterialOrder extends javax.swing.JFrame {
      */
     public ViewRawMaterialOrder() {
         initComponents();
+        this.setLocationRelativeTo(null);
         updateViewRawMaterialOrderWindow();
     }
 
@@ -44,7 +45,7 @@ public class ViewRawMaterialOrder extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Order Information");
 
         jLabel1.setText("Order:");
 
@@ -168,8 +169,8 @@ public class ViewRawMaterialOrder extends javax.swing.JFrame {
      else{
             order = (RawMaterialOrder)RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy().get("-1");
     }
-    order.setIsActive(false);
-    RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy().add(order);
+    RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy().cancelOrder(Integer.parseInt(order.getOrderID()));
+    //RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy().add(order);
     jComboBox2.removeAllItems();
     updateViewRawMaterialOrderWindow();
         
@@ -265,7 +266,7 @@ public class ViewRawMaterialOrder extends javax.swing.JFrame {
             while(results1.next()){ //initializing combo box
               
                   if(results1.getBoolean(3)){  
-                  this.jComboBox2.addItem(results1.getString(1));
+                    this.jComboBox2.addItem(results1.getString(1));
                   }
             }
         } catch (SQLException ex) {

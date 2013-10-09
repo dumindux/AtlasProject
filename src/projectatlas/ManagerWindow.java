@@ -59,6 +59,7 @@ public class ManagerWindow extends javax.swing.JFrame {
         jList1 = new javax.swing.JList();
         jLabel5 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -66,6 +67,8 @@ public class ManagerWindow extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Factory Manager");
+        setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -75,7 +78,7 @@ public class ManagerWindow extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Type", "Amount", "Value"
+                "Type", "Amount", "Unit price(Rs)"
             }
         ) {
             Class[] types = new Class [] {
@@ -106,7 +109,7 @@ public class ManagerWindow extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Type", "Amount", "Value"
+                "Type", "Amount", "Unit price(Rs)"
             }
         ) {
             Class[] types = new Class [] {
@@ -170,6 +173,11 @@ public class ManagerWindow extends javax.swing.JFrame {
         });
 
         jButton2.setText("View Orders");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("jLabel2");
 
@@ -211,6 +219,9 @@ public class ManagerWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel6.setText("Factory Manager");
+
         jMenu1.setText("File");
 
         jMenuItem2.setText("Exit");
@@ -248,7 +259,9 @@ public class ManagerWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(71, 71, 71)
+                .add(jLabel6)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButton1)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButton2)
@@ -268,12 +281,13 @@ public class ManagerWindow extends javax.swing.JFrame {
                         .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 576, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createSequentialGroup()
-                                .add(jLabel3)
-                                .add(0, 0, Short.MAX_VALUE))
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                                 .add(0, 0, Short.MAX_VALUE)
-                                .add(jButton5)))
+                                .add(jButton5))
+                            .add(layout.createSequentialGroup()
+                                .add(15, 15, 15)
+                                .add(jLabel3)
+                                .add(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 576, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
@@ -299,11 +313,13 @@ public class ManagerWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton1)
-                    .add(jButton2))
-                .add(39, 39, 39)
+                .add(24, 24, 24)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabel6)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jButton1)
+                        .add(jButton2)))
+                .add(35, 35, 35)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 98, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(layout.createSequentialGroup()
@@ -380,6 +396,11 @@ public class ManagerWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         new NewRawMaterialOrderWindow().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new ViewRawMaterialOrder().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public void updateWindowTables()
     {
@@ -520,6 +541,7 @@ public class ManagerWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JList jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

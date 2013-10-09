@@ -4,6 +4,11 @@
  */
 package projectatlas;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Dumindu
@@ -16,6 +21,72 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
     public StoreKeeperFactoryWindow(User user) {
         initComponents();
         this.user=user;
+        this.updateFinishedProductWindowTable();
+        this.updateRawMaterialWindowTable();
+    }
+    
+    private void updateFinishedProductWindowTable(){
+        /*
+         * loads data from finished product database to the manager window
+         */
+        try {
+            ResultSet results=FinishedProductTableProxy.getFinishedProductTableProxy().getTableContents();
+            int totalValue=0;
+            for(int i=0;;i++)
+            {
+                if(!results.next())
+                {
+                    jLabel3.setText("Rs. "+totalValue+".00");
+                    return;
+                }
+                System.out.println(i);
+                jTable2.setValueAt(results.getString(1), i, 0);
+                jTable2.setValueAt(Integer.toString(Integer.parseInt(results.getString(2))+Integer.parseInt(results.getString(3))), i, 1);
+                jTable2.setValueAt(results.getString(4), i, 2);
+                totalValue+=(Integer.parseInt(results.getString(2))+Integer.parseInt(results.getString(3)))*Integer.parseInt(results.getString(4));
+                if(i==jTable2.getRowCount()-1)
+                {
+                    DefaultTableModel model=(DefaultTableModel)jTable2.getModel();
+                    model.addRow(new Object[]{null,null,null}); 
+                }
+            }
+            
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        
+    }
+    
+    private void updateRawMaterialWindowTable()
+    {
+        /*
+         * loads data from the Raw Material database to the jTable in manager main window
+         */
+        try {
+            ResultSet results=RawMaterialTypeInfoTableProxy.getRawMaterialTypeInfoTableProxy().getTableContents();
+            int totalValue=0;
+            for(int i=0;;i++)
+            {
+                if(!results.next())
+                {
+                    jLabel6.setText("Rs. "+totalValue+".00");
+                    return;
+                }
+                jTable1.setValueAt(results.getString(1), i, 0);
+                jTable1.setValueAt(results.getString(3), i, 1);
+                jTable1.setValueAt(results.getString(2), i, 2);
+                totalValue+=Integer.parseInt(results.getString(2))*Integer.parseInt(results.getString(3));
+                if(i==jTable1.getRowCount()-1)
+                {
+                    DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
+                    model.addRow(new Object[]{null,null,null}); 
+                }
+
+            }
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -51,8 +122,10 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Factory Store Keeper");
         setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -63,7 +136,7 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Type", "Amount", "Value"
+                "Type", "Amount", "Unit price(Rs)"
             }
         ) {
             Class[] types = new Class [] {
@@ -86,15 +159,31 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Type", "Amount", "Unit price(Rs)"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(jTable2);
 
         jLabel5.setText("Total value:");
@@ -102,16 +191,21 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
         jLabel6.setText("value");
 
         jButton1.setText("More");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("More");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Notifications:");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane3.setViewportView(jList1);
 
         jLabel8.setText("Logged in as:");
@@ -124,12 +218,17 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
 
         jLabel11.setText("number");
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel12.setText("Factory Store Keeper");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .add(0, 0, Short.MAX_VALUE)
+                .addContainerGap()
+                .add(jLabel12)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jLabel10)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jLabel11)
@@ -171,10 +270,11 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(31, 31, 31)
+                .add(20, 20, 20)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel10)
-                    .add(jLabel11))
+                    .add(jLabel11)
+                    .add(jLabel12, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(21, 21, 21)
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(18, 18, 18)
@@ -220,6 +320,16 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new RawMaterialWindow().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new FinishedProductWindow().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -261,6 +371,7 @@ public class StoreKeeperFactoryWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

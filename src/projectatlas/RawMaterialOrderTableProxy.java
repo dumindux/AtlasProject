@@ -141,4 +141,25 @@ public class RawMaterialOrderTableProxy implements TableProxy {
             return null;
         }
     }
+    
+    public boolean cancelOrder(int orderID)
+    {
+        try {
+            stmt=connection.createStatement();
+            stmt.executeUpdate("UPDATE "+tableName+" SET is_active=false where orderID="+orderID);
+            ResultSet results=stmt.executeQuery("SELECT * from order_rawmaterial where orderID="+orderID);
+            while(results.next())
+            {
+                RawMaterialWarehouse rmw=(RawMaterialWarehouse) RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy().get(results.getString(3));
+                rmw.setAvailAmount(rmw.getAvailAmount()+results.getInt(2));
+                rmw.setResAmount(rmw.getResAmount()-results.getInt(2));
+                RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy().add(rmw);
+            }
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RawMaterialOrderTableProxy.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+    }
 }

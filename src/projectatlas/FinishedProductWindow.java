@@ -70,7 +70,9 @@ public class FinishedProductWindow extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
+        setTitle("Finished Products");
         setPreferredSize(new java.awt.Dimension(598, 383));
+        setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
