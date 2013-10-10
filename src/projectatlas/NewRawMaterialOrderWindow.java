@@ -209,6 +209,7 @@ public class NewRawMaterialOrderWindow extends javax.swing.JFrame {
         int[] rows = jTable1.getSelectedRows();
         for (int i = 0; i < rows.length; i++) {
             model.removeRow(rows[i] - i);
+            this.tablePosition--;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
