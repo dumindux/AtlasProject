@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class FactoryLogsTableProxyTest {
     private Connection connection;

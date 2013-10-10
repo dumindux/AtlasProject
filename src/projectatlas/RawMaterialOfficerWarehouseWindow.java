@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author Cosmox Software Developers
  */
 public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
 
@@ -25,6 +25,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
      * Creates new form RawMaterialOfficerWarehouseWindow
      */
     public RawMaterialOfficerWarehouseWindow(User user) {
+        this.setLocationRelativeTo(null);
         try {
             initComponents();
             this.user=user;
@@ -71,8 +72,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -81,6 +80,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Raw material officer warehouse");
         setResizable(false);
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -251,11 +251,12 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Add to inventory", jPanel2);
 
-        jLabel8.setText("Logged in as:");
-
-        jLabel9.setText("Logged user");
-
         jButton3.setText("Logout");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -290,10 +291,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addGap(40, 40, 40)
                 .addComponent(jButton3)
                 .addGap(24, 24, 24))
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,10 +300,7 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel8))
+                .addComponent(jButton3)
                 .addGap(0, 10, Short.MAX_VALUE))
         );
 
@@ -331,6 +325,10 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         RawMaterialWarehouse store=new RawMaterialWarehouse(-1,0,availAmount,jTextField1.getText(),unitPrice);
         RawMaterialWarehouseTableProxy proxy=RawMaterialWarehouseTableProxy.getRawMaterialWarehouseTableProxy();
         proxy.add(store);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -394,6 +392,12 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
         new Options(this,true,user).setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        new LogIn().setVisible(true);
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -440,8 +444,6 @@ public class RawMaterialOfficerWarehouseWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

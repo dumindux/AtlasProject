@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class FinishedProductWindow extends javax.swing.JFrame {
 

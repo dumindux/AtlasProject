@@ -6,7 +6,7 @@ package projectatlas;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public abstract class User {
     private String username;

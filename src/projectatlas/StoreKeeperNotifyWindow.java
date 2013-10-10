@@ -6,7 +6,7 @@ package projectatlas;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author Cosmox Software Developers
  */
 public class StoreKeeperNotifyWindow extends javax.swing.JFrame {
 

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class RawMaterialTypeInfoTableProxy implements TableProxy{
     private Connection connection;

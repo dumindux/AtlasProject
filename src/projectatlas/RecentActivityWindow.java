@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class RecentActivityWindow extends javax.swing.JFrame {
 
@@ -21,6 +21,7 @@ public class RecentActivityWindow extends javax.swing.JFrame {
     public RecentActivityWindow() {
         initComponents();
         updateTable();
+        this.setLocationRelativeTo(null);
         
     }
 

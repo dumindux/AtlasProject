@@ -11,7 +11,7 @@ import javax.swing.UIManager;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class LogIn extends javax.swing.JFrame {
 
@@ -155,7 +155,7 @@ public class LogIn extends javax.swing.JFrame {
             }
             else if(user instanceof StoreKeeperWarehouse)
             {
-                new StoreKeeperFactoryWindow(user).setVisible(true);
+                new StoreKeeperWarehouseWindow(user).setVisible(true);
             }
             else if(user instanceof RawMaterialOfficerWarehouse)
             {

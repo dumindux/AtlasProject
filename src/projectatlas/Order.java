@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public abstract class Order {
     private String timestamp;

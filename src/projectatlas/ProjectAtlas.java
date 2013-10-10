@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class ProjectAtlas {
 

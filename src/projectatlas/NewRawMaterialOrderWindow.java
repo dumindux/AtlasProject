@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class NewRawMaterialOrderWindow extends javax.swing.JFrame {
     private int tablePosition=-1; //table position of the jTable1
@@ -18,6 +18,7 @@ public class NewRawMaterialOrderWindow extends javax.swing.JFrame {
      * Creates new form NewRawMaterialOrderWindow
      */
     public NewRawMaterialOrderWindow() {
+        this.setLocationRelativeTo(null);
         initComponents();
         ResultSet results=RawMaterialTypeInfoWarehouseTableProxy.getRawMaterialTypeInfoWarehouseTableProxy().getTableContents();
         try{

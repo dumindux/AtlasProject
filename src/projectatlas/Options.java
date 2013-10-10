@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class Options extends javax.swing.JDialog {
     private User user;
@@ -19,11 +19,13 @@ public class Options extends javax.swing.JDialog {
     public Options(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     public Options(java.awt.Frame parent, boolean modal,User user)
     {
         this(parent,modal);
         this.user=user;
+        this.setLocationRelativeTo(null);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,6 +50,7 @@ public class Options extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("User");
 
         jButton1.setText("Ok");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -111,8 +114,7 @@ public class Options extends javax.swing.JDialog {
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(1, 1, 1)
-                                .add(jLabel1)
-                                .add(67, 67, 67))
+                                .add(jLabel1))
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(jPasswordField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)

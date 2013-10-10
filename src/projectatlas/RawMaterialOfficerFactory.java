@@ -6,7 +6,7 @@ package projectatlas;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 public class RawMaterialOfficerFactory extends User{
 

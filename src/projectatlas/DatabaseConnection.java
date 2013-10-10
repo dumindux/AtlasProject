@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 /*
  * a singleton class which initializes the connectivity to the database.

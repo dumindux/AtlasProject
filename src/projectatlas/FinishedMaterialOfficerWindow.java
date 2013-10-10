@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author Cosmox Software Developers
  */
 public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
     private int tablePosition=-1;
@@ -19,6 +19,10 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
     public FinishedMaterialOfficerWindow(User user) {
         initComponents();
         this.user=user;
+        String username="Not logged in";
+        if(user!=null)
+            username=user.getUsername();
+        this.jLabel2.setText(username);
     }
 
     /**
@@ -85,6 +89,7 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Finished Material Officer");
         setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -301,6 +306,11 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
         jLabel2.setText("logged user");
 
         jButton1.setText("Logout");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -424,6 +434,12 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Options(this, true, user).setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new LogIn().setVisible(true);
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

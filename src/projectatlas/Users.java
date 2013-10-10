@@ -22,6 +22,7 @@ public class Users extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         loadUsers();
+        this.setLocationRelativeTo(null);
     }
 
     
@@ -66,6 +67,7 @@ public class Users extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Users");
 
         jLabel1.setText("Username");
 

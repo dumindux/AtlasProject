@@ -6,7 +6,7 @@ package projectatlas;
 
 /**
  *
- * @author Dumindu
+ * @author Cosmox Software Developers
  */
 import java.io.IOException;
 import java.sql.Connection;
