@@ -260,6 +260,8 @@ public class NewRawMaterialOrderWindow extends javax.swing.JFrame {
         Manager manager=(Manager)User.currentUser;
         System.out.println(tempOrder);
         manager.placeOrder(tempOrder);
+        Logger logger=Logger.getLogger("Manager");
+        logger.info("New Raw Material Order Placed");
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 

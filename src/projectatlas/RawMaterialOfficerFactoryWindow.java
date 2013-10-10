@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author Cosmox Software Developers
  */
 public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
     
@@ -86,6 +86,11 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Factory Rawmaterial Officer");
@@ -304,6 +309,33 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Send for Production", jPanel2);
 
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("Exit");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Options");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -379,6 +411,8 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
                 proxy.add(rmf);
                 refresh();
                 jLabel7.setText("Successfully added to the inventory");
+                projectatlas.Logger logger=projectatlas.Logger.getLogger("Raw Material Officer Factory");
+                logger.info("raw material added to the inventory");
             }
         }
         
@@ -390,6 +424,10 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        RawMaterialFactoryTableProxy proxy=RawMaterialFactoryTableProxy.getRawMaterialFactoryTableProxy();
+        proxy.deleteBatch((String)jComboBox2.getSelectedItem(), Integer.parseInt((String)jComboBox3.getSelectedItem()));
+        projectatlas.Logger logger=projectatlas.Logger.getLogger("Raw Material Officer Factory");
+        logger.info("Raw material sent to production");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox2PropertyChange
@@ -439,6 +477,16 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
         selectedOrder=(RawMaterialOrder)RawMaterialOrderTableProxy.getRawMaterialOrderTableProxy().get(""+id1);
         
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        new Options(this,true,user).setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -497,6 +545,11 @@ public class RawMaterialOfficerFactoryWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator2;

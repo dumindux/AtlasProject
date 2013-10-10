@@ -28,6 +28,7 @@ public class ManagerWindow extends javax.swing.JFrame {
         this.user=user;
         initComponents();
         updateWindowTables();
+        this.setLocationRelativeTo(null);
     }
 
     /**

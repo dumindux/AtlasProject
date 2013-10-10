@@ -191,7 +191,6 @@ public class UserTableProxy implements TableProxy{
         try {
             stmt=connection.createStatement();
             ResultSet results=stmt.executeQuery("select * from userinfo where username='"+user.getUsername()+"'");
-            stmt.close();
             
             if(!results.next())
             {
@@ -212,6 +211,17 @@ public class UserTableProxy implements TableProxy{
         } catch (SQLException ex) {
             Logger.getLogger(UserTableProxy.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }
+    }
+    public ResultSet getTableContents()
+    {
+        try {
+            stmt=connection.createStatement();
+            ResultSet results=stmt.executeQuery("SELECT * from "+tableName);
+            return results;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserTableProxy.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 }

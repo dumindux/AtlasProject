@@ -110,6 +110,24 @@ public class RawMaterialFactoryTableProxy implements TableProxy{
     public boolean update(Object obj) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    public boolean deleteBatch(String type,int batch)
+    {
+        try {
+            stmt=connection.createStatement();
+            ResultSet results1=stmt.executeQuery("SELECT * from "+tableName+" where batch="+batch);
+            RawMaterialTypeInfoTableProxy proxy=RawMaterialTypeInfoTableProxy.getRawMaterialTypeInfoTableProxy();
+            RawMaterialTypeInfoTableProxy.TypeInfo typeInfo=(RawMaterialTypeInfoTableProxy.TypeInfo)proxy.get(type);
+            typeInfo.setTotalAmount(typeInfo.getTotalAmount()-results1.getInt(2));
+            proxy.add(typeInfo);
+            stmt.executeUpdate("DELETE from "+tableName+"where batch="+batch);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RawMaterialFactoryTableProxy.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     public ResultSet getTypeOrderByBatchNumber(String type)
     {
         try {
