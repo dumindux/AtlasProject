@@ -63,7 +63,7 @@ public class FactoryLogsTableProxy implements TableProxy {
         try {
             
             stmt=connection.createStatement();
-            ResultSet results=stmt.executeQuery("select * from "+tableName+" where level='INFO'");
+            ResultSet results=stmt.executeQuery("select * from "+tableName+" where level='INFO' order by TIME DESC");
             return results;
         } catch (SQLException ex) {
             Logger.getLogger(projectatlas.FactoryLogsTableProxy.class.getName()).log(Level.SEVERE, null, ex);

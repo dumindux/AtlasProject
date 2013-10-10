@@ -380,7 +380,9 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
         int[] rows = jTable1.getSelectedRows();
         for (int i = 0; i < rows.length; i++) {
             model.removeRow(rows[i] - i);
+            tablePosition--;
         }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -423,6 +425,8 @@ public class FinishedMaterialOfficerWindow extends javax.swing.JFrame {
         model.setRowCount(4);
         Logger logger=Logger.getLogger("Finished Material Officer");
         logger.info("Finished products added to the inventory");
+        tablePosition=-1;
+        System.out.println("logging now");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

@@ -53,12 +53,13 @@ public class Logger {
     {
         try {
             Statement stmt=connection.createStatement();
-            stmt.executeUpdate("INSERT INTO factory_logs VALUES('"+User.currentUser+"','"+logger+"','"+level+"','"+message+"','"+new Timestamp(new Date().getTime())+"')");
+            stmt.executeUpdate("INSERT INTO factory_logs VALUES('"+User.currentUser.getUsername() +"','"+logger+"','"+level+"','"+message+"','"+new Timestamp(new Date().getTime())+"')");
             stmt.close();
             return true;
         } catch (SQLException ex) {
+            //return false;
+            java.util.logging.Logger.getLogger(Logger.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-            //java.util.logging.Logger.getLogger(Logger.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
