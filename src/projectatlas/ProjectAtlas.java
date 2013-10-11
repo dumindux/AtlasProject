@@ -17,7 +17,7 @@ public class ProjectAtlas {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException {
+    /*public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException {
         // TODO code application logic here
         //new MySqlPassword();
         //MySqlPassword.createConnection();
@@ -25,7 +25,7 @@ public class ProjectAtlas {
         byte[] b=hash("atlas");
         System.out.println(Arrays.toString(b));
        // MySqlPassword.shutdown();
-    }
+    }*/
     public static byte[] hash(String password)throws NoSuchAlgorithmException
     {
         MessageDigest sha256=MessageDigest.getInstance("SHA-256");

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Cosmox Software Developers
  */
-class TemporaryOrder {
+public class TemporaryOrder {
     
     private ArrayList<OrderItem> itmList=new ArrayList<OrderItem>();
     

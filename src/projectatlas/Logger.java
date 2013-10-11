@@ -8,6 +8,8 @@ package projectatlas;
  *
  * @author Cosmox Software Developers
  */
+import users.User;
+import databases.connection.DatabaseConnection;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -65,12 +67,12 @@ public class Logger {
     }
 
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Date date=new Date();
         System.out.println(new Timestamp(date.getTime()));
         Logger log=Logger.getLogger("material section");
         log.info("Testing logger 1");
         log.debug("Testing logger 2");
         log.warning("Testing logger 3");
-    }
+    }*/
 }
